@@ -1,4 +1,4 @@
-# Используем официальный .NET SDK образ для сборки
+# Используем официальный .NET SDK для сборки
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
@@ -6,14 +6,19 @@ WORKDIR /app
 COPY *.csproj ./
 RUN dotnet restore
 
-# Копируем остальное и публикуем
+# Копируем остальной код
 COPY . ./
+
+# Сборка проекта
 RUN dotnet publish -c Release -o out
 
-# Используем рантайм образ
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Используем .NET Runtime для запуска
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/out .
+COPY --from=build /app/out ./
 
-# Запускаем приложение
+# Открываем нужный порт
+EXPOSE 80
+
+# Команда запуска
 ENTRYPOINT ["dotnet", "ZametkiApp.dll"]
