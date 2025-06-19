@@ -1,19 +1,19 @@
 {
   "Files": [
     {
-      "Id": "C:\\Project\\oy_zametka-main\\wwwroot\\css\\site.css",
+      "Id": "C:\\Projectss\\oy_zametka-main2\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Project\\oy_zametka-main\\wwwroot\\js\\site.js",
+      "Id": "C:\\Projectss\\oy_zametka-main2\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Project\\oy_zametka-main\\wwwroot\\service-worker.js",
+      "Id": "C:\\Projectss\\oy_zametka-main2\\wwwroot\\service-worker.js",
       "PackagePath": "staticwebassets\\service-worker.js"
     },
     {
-      "Id": "C:\\Project\\oy_zametka-main\\wwwroot\\sound\\reminder.mp3",
+      "Id": "C:\\Projectss\\oy_zametka-main2\\wwwroot\\sound\\reminder.mp3",
       "PackagePath": "staticwebassets\\sound\\reminder.mp3"
     },
     {

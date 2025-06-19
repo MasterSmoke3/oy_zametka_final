@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZametkiApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ac475a0281a84f6186147cc7f70fcacc344b164")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZametkiApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZametkiApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

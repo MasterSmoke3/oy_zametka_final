@@ -1,24 +1,13 @@
-# Используем официальный .NET SDK образ для сборки
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-
-# Копируем CSPROJ и восстанавливаем зависимости
-COPY ZametkiApp.csproj ./
-RUN dotnet restore ZametkiApp.csproj
-
-# Копируем все остальные файлы
 COPY . .
+RUN dotnet publish "ZametkiApp.csproj" -c Release -o /app/publish
 
-# Сборка проекта
-RUN dotnet publish ZametkiApp.csproj -c Release -o /app/publish
-
-# Используем ASP.NET Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM base AS final
 WORKDIR /app
-
-# Копируем собранное приложение
 COPY --from=build /app/publish .
-
-# Указываем порт и запускаем
-EXPOSE 80
 ENTRYPOINT ["dotnet", "ZametkiApp.dll"]
