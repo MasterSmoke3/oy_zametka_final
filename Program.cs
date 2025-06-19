@@ -14,27 +14,23 @@ var builder = WebApplication.CreateBuilder(args);
 // Получаем строку подключения из конфигурации
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Проверяем, что передана строка для PostgreSQL (через env var, например)
-var usePostgres = builder.Configuration.GetValue<bool>("UsePostgres", false);
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new Exception("Не задана строка подключения к PostgreSQL");
+}
 
+// Добавляем sslmode=require в строку подключения, если его нет
+if (!connectionString.Contains("sslmode"))
+{
+    connectionString += connectionString.Contains("?") ? "&sslmode=require" : "?sslmode=require";
+}
+
+// Настройка EF Core с PostgreSQL
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
+// Сервис для уведомлений
 builder.Services.AddHostedService<DeadlineNotifierService>();
-
-if (usePostgres && !string.IsNullOrWhiteSpace(connectionString))
-{
-    // Используем PostgreSQL, добавляем sslmode=require в строку, если нет
-    if (!connectionString.Contains("sslmode"))
-    {
-        connectionString += connectionString.Contains("?") ? "&sslmode=require" : "?sslmode=require";
-    }
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseNpgsql(connectionString));
-}
-else
-{
-    // По умолчанию SQLite локальная
-    builder.Services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlite(connectionString ?? "Data Source=notes.db"));
-}
 
 builder.Services.AddSignalR();
 
@@ -86,6 +82,7 @@ app.MapHub<NotificationHub>("/notificationHub");
 app.MapRazorPages();
 app.MapControllers();
 
+// Применение миграций при запуске
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
