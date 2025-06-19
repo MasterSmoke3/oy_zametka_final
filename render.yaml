@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: oy-zametka
+    env: docker
+    plan: free
+    region: frankfurt
+    branch: main
+    repo: https://github.com/MasterSmoke3/oy_zametka
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
